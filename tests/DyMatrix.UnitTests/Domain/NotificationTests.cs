@@ -11,8 +11,10 @@ public sealed class NotificationTests
     public void Create_WithValidInputs_ShouldReturnNotification()
     {
         // Arrange & Act
-        var notification = Notification.Create("Title", "Message", NotificationLevel.Information);
-        
+        var before = TimeProvider.System.GetUtcNow();
+        var notification = Notification.Create("Title", "Message", NotificationLevel.Information, TimeProvider.System);
+        var after = TimeProvider.System.GetUtcNow();
+
         // Assert
         notification.Should().NotBeNull();
         notification.Id.Should().NotBe(Guid.Empty);
@@ -21,21 +23,19 @@ public sealed class NotificationTests
         notification.Level.Should().Be(NotificationLevel.Information);
         notification.Source.Should().BeNull();
         notification.WasForwarded.Should().BeFalse();
-        notification.Timestamp.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
+        notification.Timestamp.Should().BeOnOrAfter(before).And.BeOnOrBefore(after);
     }
 
     [Fact]
     public void Create_WithAllFields_ShouldMapCorrectly()
     {
-        // Arrange
-        var timestamp = DateTimeOffset.UtcNow.AddMinutes(-5);
-
-        // Act
-        var notification = Notification.Create("Title", "Message", NotificationLevel.Error, "OrderService", timestamp);
+        // Arrange & Act
+        var notification = Notification.Create(
+            "Title", "Message", NotificationLevel.Error, TimeProvider.System, "OrderService");
 
         // Assert
         notification.Source.Should().Be("OrderService");
-        notification.Timestamp.Should().Be(timestamp);
+        notification.Timestamp.Should().BeCloseTo(TimeProvider.System.GetUtcNow(), TimeSpan.FromSeconds(1));
     }
 
     [Theory]
@@ -44,7 +44,7 @@ public sealed class NotificationTests
     public void Create_WithEmptyTitle_ShouldThrowArgumentException(string title)
     {
         // Act
-        var act = () => Notification.Create(title, "Message", NotificationLevel.Information);
+        var act = () => Notification.Create(title, "Message", NotificationLevel.Information, TimeProvider.System);
 
         // Assert
         act.Should().Throw<ArgumentException>()
@@ -57,7 +57,7 @@ public sealed class NotificationTests
     public void Create_WithEmptyMessage_ShouldThrowArgumentException(string message)
     {
         // Act
-        var act = () => Notification.Create("Title", message, NotificationLevel.Information);
+        var act = () => Notification.Create("Title", message, NotificationLevel.Information, TimeProvider.System);
 
         // Assert
         act.Should().Throw<ArgumentException>()
@@ -72,20 +72,20 @@ public sealed class NotificationTests
     public void ShouldForward_ShouldReturnCorrectResult(NotificationLevel level, bool expected)
     {
         // Arrange
-        var notification = Notification.Create("Title", "Message", level);
-        
+        var notification = Notification.Create("Title", "Message", level, TimeProvider.System);
+
         // Act
         var result = notification.ShouldForward();
-        
+
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Fact]
     public void MarkAsForwarded_ShouldSetWasForwardedToTrue()
     {
         // Arrange
-        var notification = Notification.Create("Title", "Message", NotificationLevel.Warning);
+        var notification = Notification.Create("Title", "Message", NotificationLevel.Warning, TimeProvider.System);
 
         // Act
         notification.MarkAsForwarded();

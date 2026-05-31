@@ -12,6 +12,7 @@
       <Project Path="src/Core/DyMatrix.Domain/DyMatrix.Domain.csproj" />
     </Folder>
     <Folder Name="/src/Infrastructure/">
+      <Project Path="src/Infrastructure/DyMatrix.Infrastructure/DyMatrix.Infrastructure.csproj" />
       
     </Folder>
     <Folder Name="/src/Presentation/">

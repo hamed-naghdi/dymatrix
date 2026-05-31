@@ -13,16 +13,13 @@ public sealed class Notification
         string title,
         string message,
         NotificationLevel level,
-        string? source = null,
-        DateTimeOffset? timestamp = null)
+        TimeProvider timeProvider,
+        string? source = null)
     {
         // Avoided using value objects with DDD pattern for such a small test project.
         
-        if (string.IsNullOrWhiteSpace(title))
-            throw new ArgumentException("Title cannot be empty.", nameof(title));
-
-        if (string.IsNullOrWhiteSpace(message))
-            throw new ArgumentException("Message cannot be empty.", nameof(message));
+        ArgumentException.ThrowIfNullOrWhiteSpace(title);
+        ArgumentException.ThrowIfNullOrWhiteSpace(message);
         
         return new Notification
         {
@@ -31,7 +28,7 @@ public sealed class Notification
             Message = message,
             Level = level,
             Source = source,
-            Timestamp = timestamp ?? DateTimeOffset.UtcNow,
+            Timestamp = timeProvider.GetUtcNow(),
             WasForwarded = false
         };
     }

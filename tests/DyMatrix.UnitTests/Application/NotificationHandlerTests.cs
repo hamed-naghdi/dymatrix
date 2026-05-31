@@ -16,7 +16,7 @@ public sealed class NotificationHandlerTests
     private readonly INotificationForwarder _forwarder = Substitute.For<INotificationForwarder>();
     private readonly ILogger<NotificationHandler> _logger = Substitute.For<ILogger<NotificationHandler>>();
     
-    private NotificationHandler CreateNotificationHandlerSut() => new(_llmService, _forwarder, _logger);
+    private NotificationHandler CreateNotificationHandlerSut() => new(_llmService, _forwarder, TimeProvider.System, _logger);
     
     [Fact]
     public async Task Handle_WithInfoLevel_ShouldNotForward()
@@ -31,8 +31,8 @@ public sealed class NotificationHandlerTests
         
         // Assert
         result.Forwarded.Should().BeFalse();
-        await _llmService.DidNotReceive().GenerateMessageAsync(Arg.Any<Notification>(), TestContext.Current.CancellationToken);
-        await  _forwarder.DidNotReceive().ForwardAsync(Arg.Any<string>(), TestContext.Current.CancellationToken);
+        await _llmService.DidNotReceive().GenerateMessageAsync(Arg.Any<Notification>(), Arg.Any<CancellationToken>());
+        await _forwarder.DidNotReceive().ForwardAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
     }
 
     [Theory]

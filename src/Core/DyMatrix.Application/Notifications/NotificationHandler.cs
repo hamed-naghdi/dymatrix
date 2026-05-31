@@ -9,15 +9,18 @@ public partial class NotificationHandler : IRequestHandler<NotificationRequest, 
 {
     private readonly ILlmService _llmService;
     private readonly INotificationForwarder _forwarder;
+    private readonly TimeProvider _timeProvider;
     private readonly ILogger<NotificationHandler> _logger;
 
     public NotificationHandler(
         ILlmService llmService,
         INotificationForwarder forwarder,
+        TimeProvider timeProvider,
         ILogger<NotificationHandler> logger)
     {
         _llmService = llmService;
         _forwarder = forwarder;
+        _timeProvider = timeProvider;
         _logger = logger;
     }
     
@@ -33,8 +36,8 @@ public partial class NotificationHandler : IRequestHandler<NotificationRequest, 
             request.Title,
             request.Message,
             level,
-            request.Source,
-            request.Timestamp);
+            _timeProvider,
+            request.Source);
         
         // Short-circuit if no forwarding needed
         if (!notification.ShouldForward())
