@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/" />
+    <Folder Name="/src/Core/">
+      
+    </Folder>
+    <Folder Name="/src/Infrastructure/">
+      
+    </Folder>
+    <Folder Name="/src/Presentation/">
+      
+    </Folder>
+  <Folder Name="/tests/">
+    
+  </Folder>
+</Solution>
