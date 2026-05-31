@@ -1,12 +1,6 @@
 ﻿using DyMatrix.Application.Common.Interfaces;
 using DyMatrix.Application.Notifications;
-using DyMatrix.Domain.Entities;
-using DyMatrix.Domain.Exceptions;
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
 using NSubstitute.ExceptionExtensions;
-using Xunit;
 
 namespace DyMatrix.UnitTests.Application;
 

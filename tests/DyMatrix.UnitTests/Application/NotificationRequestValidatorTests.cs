@@ -1,6 +1,5 @@
 ﻿using DyMatrix.Application.Notifications;
 using FluentValidation.TestHelper;
-using Xunit;
 
 namespace DyMatrix.UnitTests.Application;
 

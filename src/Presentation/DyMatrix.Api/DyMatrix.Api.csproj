@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Scalar.AspNetCore" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\DyMatrix.Application\DyMatrix.Application.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\DyMatrix.Infrastructure\DyMatrix.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

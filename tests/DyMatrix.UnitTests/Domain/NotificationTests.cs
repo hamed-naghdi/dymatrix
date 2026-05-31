@@ -1,7 +1,4 @@
-﻿using DyMatrix.Domain.Entities;
-using DyMatrix.Domain.Enums;
-using FluentAssertions;
-using Xunit;
+﻿using DyMatrix.Domain.Enums;
 
 namespace DyMatrix.UnitTests.Domain;
 

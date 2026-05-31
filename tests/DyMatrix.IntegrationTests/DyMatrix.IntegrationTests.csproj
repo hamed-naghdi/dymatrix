@@ -16,9 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Core\DyMatrix.Application\DyMatrix.Application.csproj" />
-      <ProjectReference Include="..\..\src\Core\DyMatrix.Domain\DyMatrix.Domain.csproj" />
-      <ProjectReference Include="..\..\src\Infrastructure\DyMatrix.Infrastructure\DyMatrix.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\src\Presentation\DyMatrix.Api\DyMatrix.Api.csproj" />
     </ItemGroup>
 
 </Project>
